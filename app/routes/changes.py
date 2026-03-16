@@ -94,7 +94,6 @@ def reject_change(change_id):
     change = Change.query.get(change_id)
     change.state = "New"
     db.session.commit()
-
     return redirect(url_for("change.view_change", change_id=change.id))
 
 ## Implements a change - Requires Login
