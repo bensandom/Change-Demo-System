@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit User</h2>
+
+<!-- MAIN USER EDIT FORM -->
+<form action="{{ url_for('user_management.edit_user', user_id=user.id) }}" method="POST">
+
+    <table class="detail-table">
+        <tr>
+            <th>ID</th>
+            <td>{{ user.id }}</td>
+        </tr>
+
+        <tr>
+            <th>Username</th>
+            <td>
+                <input type="text" name="username" value="{{ user.username }}" required>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Role</th>
+            <td>
+                <select name="role" required>
+                    <option value="Admin" {% if user.role == "Admin" %}selected{% endif %}>Admin</option>
+                    <option value="User" {% if user.role == "User" %}selected{% endif %}>User</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Groups</th>
+            <td>
+                {% if user.groups %}
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for group in user.groups %}
+                        <tr>
+                            <td>{{ group.name }}</td>
+                            <td>
+                                <a class ="btn" href="{{ url_for('group_management.view_group', group_id=group.id) }}">View Group</a>
+                                <a href="{{ url_for('usergroup_management.remove_user_from_group', user_id=user.id, group_id=group.id) }}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Remove {{ user.username }} from {{ group.name }}?')">
+                                   Remove
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                {% else %}
+                    <em>No groups assigned</em>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <div class="actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a class="btn btn-danger" href="{{ url_for('user_management.user_list') }}">Cancel</a>
+    </div>
+
+</form>
+
+{% endblock %}

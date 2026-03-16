@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Change</h2>
+
+<form action="{{ url_for('change.edit_change', change_id=change.id) }}" method="POST">
+    <table class="detail-table">
+
+        <tr>
+            <th>ID</th>
+            <td>{{ change.id }}</td>
+        </tr>
+
+        <tr>
+            <th>Short Description</th>
+            <td>
+                <input type="text" name="short_description" value="{{ change.short_description }}" required>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Business Justification</th>
+            <td>
+                <textarea name="business_justification" rows="4" required>{{ change.business_justification }}</textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Risk</th>
+            <td>
+                <select name="risk" required>
+                    <option value="Low"    {% if change.risk == "Low" %}selected{% endif %}>Low</option>
+                    <option value="Medium" {% if change.risk == "Medium" %}selected{% endif %}>Medium</option>
+                    <option value="High"   {% if change.risk == "High" %}selected{% endif %}>High</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Approver</th>
+            <td>
+                <select name="approver" required>
+                    {% for user in users %}
+                        <option value="{{ user.id }}"
+                            {% if user.id == change.approver %}selected{% endif %}>
+                            {{ user.username }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Assignment Group</th>
+            <td>
+                <select name="assignment_group" required>
+                    {% for group in groups %}
+                        <option value="{{ group.id }}"
+                            {% if group.id == change.assignment_group %}selected{% endif %}>
+                            {{ group.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Assigned To</th>
+            <td>
+                <select name="assigned_to" required>
+                    {% for user in users %}
+                        <option value="{{ user.id }}"
+                            {% if user.id == change.assigned_to %}selected{% endif %}>
+                            {{ user.username }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>State</th>
+            <td>{{ change.state }}</td>
+        </tr>
+
+        <tr>
+            <th>Start Date/Time</th>
+            <td>
+                {% if change.start_date_time %}
+                    {{ change.start_date_time.strftime("%Y-%m-%d %H:%M") }}
+                {% else %}
+                    Not Set
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>End Date/Time</th>
+            <td>
+                {% if change.end_date_time %}
+                    {{ change.end_date_time.strftime("%Y-%m-%d %H:%M") }}
+                {% else %}
+                    Not Set
+                {% endif %}
+            </td>
+        </tr>
+
+    </table>
+
+    <div class="actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a class="btn btn-danger" href="{{ url_for('change.view_change', change_id=change.id) }}">Cancel</a>
+    </div>
+</form>
+
+<style>
+
+    input[type="text"],
+    input[type="datetime-local"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
+
+{% endblock %}

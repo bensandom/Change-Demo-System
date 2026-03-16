@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>All Changes</h2>
+
+<a class="btn btn-primary" href="{{ url_for('change.add_change') }}">New Change</a>
+
+<table class="detail-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Short Description</th>
+            <th>Business Justification</th>
+            <th>Risk</th>
+            <th>Approver</th>
+            <th>State</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for change in changes %}
+        <tr>
+            <td>{{ change.id }}</td>
+            <td>{{ change.short_description }}</td>
+            <td>{{ change.business_justification }}</td>
+            <td>{{ change.risk }}</td>
+            <td>{{ change.approver_user.username }}</td>
+            <td>{{ change.state }}</td>
+            <td>
+                <a class = "btn" href="{{ url_for('change.view_change', change_id=change.id) }}">View</a>
+                <a class = "btn btn-primary" href="{{ url_for('change.edit_change', change_id=change.id) }}">Edit</a>
+                {% if current_user.role == 'Admin' %}
+                    <a class = "btn btn-danger" href="{{ url_for('change.delete_change', change_id=change.id) }}" onclick="return confirm('Are you sure you want to delete this change?')">Delete</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background: #333;
+        color: white;
+    }
+
+    tr:hover {
+        background: #f1f1f1;
+    }
+</style>
+
+{% endblock %}

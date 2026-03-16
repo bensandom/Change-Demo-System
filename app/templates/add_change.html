@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Add New Change</h2>
+
+<form method="POST">
+  <table class="detail-table">
+    <tr>
+      <th>Short Description</th>
+
+      <td><input name="short_description" placeholder="Short Description" required></td>
+    </tr>
+
+    <tr>
+      <th>Business Justification</th>
+
+      <td><textarea name="business_justification" placeholder="Business Justification" required></textarea></td>
+    </tr>
+
+    <tr>
+      <th>Risk</th>
+      <td>
+        <select name="risk" placeholder="Risk" required>
+          <option value="">Select Risk</option>
+          {% for risk in risk_options %}
+            <option value="{{ risk }}">{{ risk }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th>Approver</th>
+      <td>
+        <select name="approver" required>
+          <option value="">Select Approver</option>
+          {% for user in approvers %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th>Assignment Group</th>
+      <td>
+        <select name="assignment_group" required>
+          <option value="">Select Assignment Group</option>
+          {% for group in groups %}
+            <option value="{{ group.id }}">{{ group.name }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+    <th>Assigned To</th>
+    <td>
+      <select name="assigned_to" required>
+        <option value="">Select Assigned User</option>
+        {% for user in all_users %}
+          <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+      </select>
+    </td>
+    </tr>
+  </table>
+  <button class="btn btn-primary" type="submit">Submit Change</button>
+</form>
+
+{% endblock %}

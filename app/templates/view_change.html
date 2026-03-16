@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Change Details</h2>
+
+<div class="change-details">
+
+    <table class="detail-table">
+        <tr>
+            <th>ID</th>
+            <td>{{ change.id }}</td>
+        </tr>
+
+        <tr>
+            <th>Short Description</th>
+            <td>{{ change.short_description }}</td>
+        </tr>
+
+        <tr>
+            <th>Business Justification</th>
+            <td>{{ change.business_justification }}</td>
+        </tr>
+
+        <tr>
+            <th>Risk</th>
+            <td>{{ change.risk }}</td>
+        </tr>
+
+        <tr>
+            <th>Approver</th>
+            <td>{{ change.approver_user.username }}</td>
+        </tr>
+
+        <tr>
+            <th>Assigned Group</th>
+            <td>{{ change.assignment_group_rel.name }}</td>
+        </tr>
+
+        <tr>
+            <th>Assigned To</th>
+            <td>{{ change.assigned_user.username }}</td>
+        </tr>
+
+        <tr>
+            <th>State</th>
+            <td>{{ change.state }}</td>
+        </tr>
+
+        <tr>
+            <th>Start Date/Time</th>
+            <td>
+                {% if change.start_date_time %}
+                    {{ change.start_date_time.strftime("%Y-%m-%d %H:%M") }}
+                {% else %}
+                    Not Set
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>End Date/Time</th>
+            <td>
+                {% if change.end_date_time %}
+                    {{ change.end_date_time.strftime("%Y-%m-%d %H:%M") }}
+                {% else %}
+                    Not Set
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <div class="actions">
+        <a href="{{ url_for('change.change_list') }}" class="btn">Back to List</a>
+        {% if change.state == 'New' %}
+        <a href="{{ url_for('change.send_for_approval', change_id=change.id) }}" class="btn">Send for Approval</a>
+        {% endif %}
+        {% if change.state != 'Completed' %}
+        <a class = "btn btn-primary" href="{{ url_for('change.edit_change', change_id=change.id) }}" class="btn">Edit Change</a>
+        {% endif %}
+        {% if change.state == 'Authorise' and current_user.id == change.approver %}
+            <a href="{{ url_for('change.approve_change', change_id=change.id) }}" class="btn">Approve Change</a>
+            <a class = "btn btn-danger" href="{{ url_for('change.reject_change', change_id=change.id) }}" class="btn">Reject Change</a>
+        {% endif %}
+        {% if change.state == 'Scheduled' %}
+            <a href="{{ url_for('change.implement_change', change_id=change.id) }}" class="btn">Implement Change</a>
+        {% endif %}
+        {% if change.state == 'Implemented' %}
+            <a href="{{ url_for('change.complete_change', change_id=change.id) }}" class="btn">Complete Change</a>
+        {% endif %}
+        {% if current_user.role == 'Admin' %}
+            <a href="{{ url_for('change.delete_change', change_id=change.id) }}"
+               class="btn btn-danger"
+               onclick="return confirm('Are you sure you want to delete this change?')">
+               Delete Change
+            </a>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}
