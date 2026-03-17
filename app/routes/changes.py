@@ -4,6 +4,7 @@ from ..models import Change, User, Group
 from ..extensions import db
 from datetime import datetime
 
+## Allows us to group related routes together and import them into the main app
 change_bp = Blueprint('change', __name__)
 
 ##Lists All Changes - Requires Login
@@ -17,6 +18,7 @@ def change_list():
 @change_bp.route("/add_change", methods=["GET","POST"])
 @login_required
 def add_change():
+    ##builds out the form and adds the change to the database when submitted
     if request.method == "POST":
         short_description = request.form["short_description"]
         business_justification = request.form["business_justification"]
@@ -24,7 +26,7 @@ def add_change():
         approver_id = request.form["approver"]
         assigned_to_id = request.form["assigned_to"]
         assignment_group_id = request.form["assignment_group"]
-
+        ## Stores the new change
         new_change = Change(
             short_description=short_description,
             business_justification=business_justification,
@@ -33,10 +35,12 @@ def add_change():
             assigned_to=assigned_to_id,
             assignment_group = assignment_group_id
         )
+        ## Commits the new change to the database
         db.session.add(new_change)
         db.session.commit()
         return redirect(url_for("change.change_list"))
 
+    ## Need to get the list of approvers, users and groups to populate the dropdowns in the form
     risk_options = ["Minor", "Moderate", "Major"]
     all_users = User.query.all()
     approvers = User.query.filter_by(role="Admin").all()
@@ -63,6 +67,8 @@ def edit_change(change_id):
         change.business_justification = request.form["business_justification"]
         change.risk = request.form["risk"]
         change.approver = request.form["approver"]
+        change.assigned_to = request.form["assigned_to"]
+        change.assignment_group = request.form["assignment_group"]
         db.session.commit()
         return redirect(url_for("change.change_list"))
 
