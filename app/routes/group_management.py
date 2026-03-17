@@ -3,20 +3,24 @@ from flask_login import login_required
 from ..models import User, Group, UserGroup
 from ..extensions import db
 
+## Allows us to group related routes together and import them into the main app
 group_bp = Blueprint('group_management', __name__)
 
+## List all Groups - Requires Login
 @group_bp.route("/group_list", methods=["GET"])
 @login_required
 def group_list():
     groups = Group.query.all()
     return render_template("group_management/group_list.html", groups=groups)
 
+## List Group Details - Requires Login
 @group_bp.route("/view_group/<int:group_id>", methods=["GET"])
 @login_required
 def view_group(group_id):
     group = Group.query.get(group_id)
     return render_template("group_management/view_group.html", group=group)
 
+## Add New Group - Requires Login
 @group_bp.route("/add_group", methods=["GET", "POST"])
 @login_required
 def add_group():
@@ -31,6 +35,7 @@ def add_group():
 
     return render_template("group_management/add_group.html")
 
+## Edit Existing Group - Requires Login
 @group_bp.route("/edit_group/<int:group_id>", methods=["GET", "POST"])
 @login_required
 def edit_group(group_id):
@@ -42,7 +47,8 @@ def edit_group(group_id):
 
     return render_template("group_management/edit_group.html", group=group)
 
-@group_bp.route("/delete_group/<int:group_id>", methods=["POST"])
+## Delete Group - Requires Login
+@group_bp.route("/delete_group/<int:group_id>", methods=["GET", "POST"])
 @login_required
 def delete_group(group_id):
     group = Group.query.get(group_id)
