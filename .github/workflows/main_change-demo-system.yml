@@ -73,4 +73,5 @@ jobs:
         with:
           app-name: 'Change-Demo-System'
           slot-name: 'Production'
+          package: .
           
