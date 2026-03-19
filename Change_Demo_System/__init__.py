@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from .extensions import db, login_manager
+from Change_Demo_System.models import User
 
 def create_app():
     app = Flask(__name__)
@@ -11,24 +12,6 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     ## Importing Database models after the app has been intialised
-    from Change_Demo_System.models import User, Group, UserGroup, Change
-
-    if User.query.count() == 0:
-        from Change_Demo_System.seeds.seed_users import seed_users
-        seed_users()
-
-    if Group.query.count() == 0:
-        from Change_Demo_System.seeds.seed_groups import seed_groups
-        seed_groups()
-
-    if UserGroup.query.count() == 0:
-        from Change_Demo_System.seeds.seed_usergroups import seed_usergroups
-        seed_usergroups()
-    
-    if Change.query.count() == 0:
-        from Change_Demo_System.seeds.seed_changes import seed_changes
-        seed_changes()
-
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
@@ -48,5 +31,22 @@ def create_app():
     ## Creating tables and adding static seeds
     with app.app_context():
         db.create_all()
+        from Change_Demo_System.models import Group, UserGroup, Change
+
+    if User.query.count() == 0:
+        from Change_Demo_System.seeds.seed_users import seed_users
+        seed_users()
+
+    if Group.query.count() == 0:
+        from Change_Demo_System.seeds.seed_groups import seed_groups
+        seed_groups()
+
+    if UserGroup.query.count() == 0:
+        from Change_Demo_System.seeds.seed_usergroups import seed_usergroups
+        seed_usergroups()
+    
+    if Change.query.count() == 0:
+        from Change_Demo_System.seeds.seed_changes import seed_changes
+        seed_changes()
 
     return app
