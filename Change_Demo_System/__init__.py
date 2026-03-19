@@ -6,7 +6,7 @@ from Change_Demo_System.models import User
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "secret"
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///data.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///app.db")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
