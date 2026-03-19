@@ -6,7 +6,7 @@ from Change_Demo_System.models import User
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "secret"
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///app.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///data.db")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
@@ -33,20 +33,20 @@ def create_app():
         db.create_all()
         from Change_Demo_System.models import Group, UserGroup, Change
 
-    if User.query.count() == 0:
-        from Change_Demo_System.seeds.seed_users import seed_users
-        seed_users()
+        if User.query.count() == 0:
+            from Change_Demo_System.seeds.seed_users import seed_users
+            seed_users()
 
-    if Group.query.count() == 0:
-        from Change_Demo_System.seeds.seed_groups import seed_groups
-        seed_groups()
+        if Group.query.count() == 0:
+            from Change_Demo_System.seeds.seed_groups import seed_groups
+            seed_groups()
 
-    if UserGroup.query.count() == 0:
-        from Change_Demo_System.seeds.seed_usergroups import seed_usergroups
-        seed_usergroups()
+        if UserGroup.query.count() == 0:
+            from Change_Demo_System.seeds.seed_usergroups import seed_usergroups
+            seed_usergroups()
     
-    if Change.query.count() == 0:
-        from Change_Demo_System.seeds.seed_changes import seed_changes
-        seed_changes()
+        if Change.query.count() == 0:
+            from Change_Demo_System.seeds.seed_changes import seed_changes
+            seed_changes()
 
     return app
