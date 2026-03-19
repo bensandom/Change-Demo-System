@@ -2,8 +2,6 @@ from Change_Demo_System.extensions import db
 from Change_Demo_System.models import User, Group, UserGroup
 
 def seed_usergroups():
-    Group.query.delete()
-    db.session.commit()
     service_desk_approver = User.query.filter_by(username="sd_approver").first()
     service_desk_user = User.query.filter_by(username="sd_user").first()
 
