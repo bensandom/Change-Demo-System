@@ -36,17 +36,21 @@ def create_app():
         if User.query.count() == 0:
             from Change_Demo_System.seeds.seed_users import seed_users
             seed_users()
+            db.session.commit()
 
         if Group.query.count() == 0:
             from Change_Demo_System.seeds.seed_groups import seed_groups
             seed_groups()
+            db.session.commit()
 
         if UserGroup.query.count() == 0:
             from Change_Demo_System.seeds.seed_usergroups import seed_usergroups
             seed_usergroups()
+            db.session.commit()
     
         if Change.query.count() == 0:
             from Change_Demo_System.seeds.seed_changes import seed_changes
             seed_changes()
+            db.session.commit()
 
     return app
