@@ -3,17 +3,17 @@ from Change_Demo_System.models import User, Group, UserGroup, Change
 from datetime import datetime
 
 def seed_changes():
-    service_desk_approver = User.query.filter_by(username="service_desk_approver").first()
-    service_desk_user = User.query.filter_by(username="service_desk_user").first()
+    service_desk_approver = User.query.filter_by(username="sd_approver").first()
+    service_desk_user = User.query.filter_by(username="sd_user").first()
 
-    request_team_approver = User.query.filter_by(username="request_approver").first()
-    request_team_user = User.query.filter_by(username="request_user").first()
+    request_team_approver = User.query.filter_by(username="req_approver").first()
+    request_team_user = User.query.filter_by(username="req_user").first()
 
-    infrastructure_team_approver = User.query.filter_by(username="infrastructure_approver").first()
-    infrastructure_team_user = User.query.filter_by(username="infrastructure_user").first()
+    infrastructure_team_approver = User.query.filter_by(username="inf_approver").first()
+    infrastructure_team_user = User.query.filter_by(username="inf_user").first()
 
-    application_support_approver = User.query.filter_by(username="application_support_approver").first()
-    application_support_user = User.query.filter_by(username="application_support_user").first()
+    application_support_approver = User.query.filter_by(username="app_sup_approver").first()
+    application_support_user = User.query.filter_by(username="app_sup_user").first()
 
     default_admin = User.query.filter_by(username="admin").first()
     change_manager = User.query.filter_by(username="Change_Manager").first()
