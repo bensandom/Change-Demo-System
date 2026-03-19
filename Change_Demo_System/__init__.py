@@ -10,7 +10,7 @@ from .routes.usergroup_management import usergroup_bp
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "secret"
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
@@ -19,7 +19,7 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
-
+## REgistering all blueprints for routes so they can be used later
     app.register_blueprint(auth_bp)
     app.register_blueprint(change_bp)
     app.register_blueprint(user_management_bp)
