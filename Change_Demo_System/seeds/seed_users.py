@@ -2,8 +2,6 @@ from Change_Demo_System.extensions import db
 from Change_Demo_System.models import User
 
 def seed_users():
-    User.query.delete()
-    db.session.commit()
     service_desk_approver = User(username="sd_approver", password="sd_approver", role="Admin")
     service_desk_user = User(username="sd_user", password="sd_user", role="User")
     request_team_approver = User(username="req_approver", password="req_approver", role="Admin")
