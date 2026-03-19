@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from .extensions import db, login_manager
 
 def create_app():
     app = Flask(__name__)
