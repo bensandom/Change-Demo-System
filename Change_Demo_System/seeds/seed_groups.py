@@ -1,6 +1,7 @@
 from Change_Demo_System.extensions import db
 from Change_Demo_System.models import Group
 
+## Adds users into the database if there are none
 def seed_groups():
     Service_Desk_Group = Group(name="Service Desk")
     Request_Team_Group = Group(name="Request Team")
