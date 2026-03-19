@@ -1,6 +1,6 @@
-from app import create_app
-from app.extensions import db
-from app.models import User, Change, Group, UserGroup
+from Change_Demo_System import create_app
+from Change_Demo_System.extensions import db
+from Change_Demo_System.models import User, Change, Group, UserGroup
 
 app = create_app()
 
@@ -8,20 +8,20 @@ with app.app_context():
     db.create_all()
 
     if User.query.count() == 0:
-        from app.seeds.seed_users import seed_users
+        from Change_Demo_System.seeds.seed_users import seed_users
         seed_users()
         
 
     if Group.query.count() == 0:
-        from app.seeds.seed_groups import seed_groups
+        from Change_Demo_System.seeds.seed_groups import seed_groups
         seed_groups()
 
     if UserGroup.query.count() == 0:
-        from app.seeds.seed_usergroups import seed_usergroups
+        from Change_Demo_System.seeds.seed_usergroups import seed_usergroups
         seed_usergroups()
     
     if Change.query.count() == 0:
-        from app.seeds.seed_changes import seed_changes
+        from Change_Demo_System.seeds.seed_changes import seed_changes
         seed_changes()
 
 
