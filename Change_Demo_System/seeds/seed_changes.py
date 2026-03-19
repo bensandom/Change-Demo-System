@@ -136,5 +136,5 @@ def seed_changes():
         end_date_time=datetime(2026, 3, 5, 9, 15)
     )
 
-    db.session.add_all([change1, change2])
+    db.session.add_all([change1, change2, change3, change4,change5,change6,change7,change8,change9,change10])
     db.session.commit()
