@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Change Demo App</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        background: #444;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-right: 10px;
+        }
+
+        .btn-danger {
+        background: #c0392b;
+        }
+
+        .btn-primary {
+        background: #2980b9;
+        }
+
+        .btn:hover {
+        opacity: 0.85;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        margin-top: 20px;
+        }
+
+        .detail-table th {
+        width: 200px;
+        background: #333;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        }
+
+        .detail-table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        }
+
+        .actions {
+        margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>Change Demo App</h1>
+
+        {% if current_user.role == 'Admin' %}
+            <a class="btn btn-primary" href="{{ url_for('change.change_list') }}">Change Management</a>
+            <a class="btn btn-primary" href="{{ url_for('user_management.user_list') }}">User Management</a>
+            <a class="btn btn-primary" href="{{ url_for('group_management.group_list') }}">Group Management</a>
+        {% endif %}
+
+        <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>
