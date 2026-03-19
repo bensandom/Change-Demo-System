@@ -13,6 +13,22 @@ def create_app():
     ## Importing Database models after the app has been intialised
     from Change_Demo_System.models import User, Group, UserGroup, Change
 
+    if User.query.count() == 0:
+        from Change_Demo_System.seeds.seed_users import seed_users
+        seed_users()
+
+    if Group.query.count() == 0:
+        from Change_Demo_System.seeds.seed_groups import seed_groups
+        seed_groups()
+
+    if UserGroup.query.count() == 0:
+        from Change_Demo_System.seeds.seed_usergroups import seed_usergroups
+        seed_usergroups()
+    
+    if Change.query.count() == 0:
+        from Change_Demo_System.seeds.seed_changes import seed_changes
+        seed_changes()
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
