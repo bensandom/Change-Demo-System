@@ -6,7 +6,7 @@ def seed_usergroups():
     service_desk_user = User.query.filter_by(username="sd_user").first()
 
     request_team_approver = User.query.filter_by(username="req_approver").first()
-    request_team_user = User.query.filter_by(username="request_user").first()
+    request_team_user = User.query.filter_by(username="req_user").first()
 
     infrastructure_team_approver = User.query.filter_by(username="inf_approver").first()
     infrastructure_team_user = User.query.filter_by(username="inf_user").first()
